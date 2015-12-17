@@ -1,0 +1,13 @@
+Connor Kenny
+CS 31 Project 1 Report
+
+In step 5 of this project many different combinations of integers created incorrect results. This happened whenever the number of votes for Jerry plus the votes for Neel did not add up perfectly to numberSurveyed. This would allow the percentage of votes to not add up to 100, or sometimes even go over. It only worked correctly when forNeel + forJerry = numberSurveyed and forNeel did not equal forJerry, because that would result in the phrase “Neel is predicted to win the election” even though it should have been a tie. Also, all three of these numbers must be positive for it to work correctly.
+
+To create a logic error, I added an extra 0 in the statement “double pctJerry = 100.0 * forJerry / numberSurveyed;” so that it would read “double pctJerry = 1000.0 * forJerry / numberSurveyed;” This resulted in the pctJerry variable holding a percentage that was 10 times higher than what the original programmer wanted. When the project was run, the pctJerry could be much greater than pctNeel, but Neel could still win if he received more votes. Also the pctJerry could end up holding a number far greater than 100 which shouldn’t happen if it is a percentage. The program would still compile, but it would not run as intended.
+
+To create compiler errors, I deleted two different items. For the first one, took out “using namespace std;” so that none of cin or cout would work correctly. They would have needed to have std::cin or std::cout for it to work. The error read “Use of undeclared identifier…” because those functions hadn’t been correctly declared. For the second, I just deleted the semicolon after the statement “int numberSurveyed.” This resulted in the error message, “Expected ‘;’ at end of declaration” because declarations need a semicolon to be complete.
+
+
+
+
+

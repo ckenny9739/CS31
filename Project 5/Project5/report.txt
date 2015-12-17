@@ -1,0 +1,148 @@
+Connor Kenny
+Project 5
+
+Obstacles: I ran into multiple obstacles while completing this project. Most of my problems stemmed from not totally understanding C strings in the first place, so when I started, I ended up getting myself stuck. I had to make sure I used all the correct syntax because it is quite different from string. I also had some trouble with naming my iterating variables. Once I set all those variables straight, my functions worked perfectly. Overall, most of my problems would have been nonexistent if I was more organized and outlined my code in the first place. I will try to incorporate that next project.
+
+Design:
+swap - swaps two different C strings
+
+standarizeRules - 
+Check for nRules <= 0
+Set lastPos = number of rules - 1
+for loop i from 0 to lastPos
+	needSwap is false ( set to true if need to swap )
+	if distance is negative, word1/word2 = empty, has non alpha
+		swap all array elements at i to lastPos
+		decrement i and lastPos
+for loop i from 0 to lastPos
+	for loop from i+1 to lastPos
+		if same words in different rules
+			swap elements of lower distance
+			decrement i and lastPos, break
+return lastPos + 1
+
+determineQuality - 
+Check nRules <= 0, document length = 0
+Set number of matches, and word number to 0
+array of C strings of max size for the project
+for loop docLetter from 0 to document length
+	if document has a space, continue on to next iteration
+	letter to 0
+	while letter is not a space
+		if a letter
+			add to new document in lowercase
+		else if last viable character != alpha
+			break - don’t continue on adding words
+		increment letter
+	add a null terminator, increment word
+if new document is empty, return 0
+for loop i from 0 to number of rules
+	if distance is 0, continue to next iteration
+	match to false
+	for loop j from 0 to number of words
+		if word1 == word in doc
+			for loop k from 1 to distance
+				if matches to word2
+					match = true, increment match, break
+		if match = true, break
+		if word2 = word in doc
+			for loop k from 1 to distance
+				if matches to word1
+					match = true, increment match, break
+		if match = true, break
+return matches
+
+
+Test Cases: 
+    const int TEST1_NCRITERIA = 4;
+    int test1dist[TEST1_NCRITERIA] = {
+        2,           4,          1,           13
+    };
+    char test1w1[TEST1_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "mad",       "deranged", "nefarious", "have"
+    };
+    char test1w2[TEST1_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "scientist", "robot",    "plot",      "mad"
+    };
+    
+    const int TEST2_NCRITERIA = 6;
+    int test2dist[TEST2_NCRITERIA] = {
+        2,           4,          1,           13,           5,          0
+    };
+    char test2w1[TEST2_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "mad",       "deranged", "nefarious", "have",     "SCIENTIST",     "dog"
+    };
+    char test2w2[TEST2_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "scientist", "rob3ot",    "",      "mad",        "mad",        "cat"
+    };
+    
+    const int TEST3_NCRITERIA = 5;
+    int test3dist[TEST3_NCRITERIA] = {
+        1,           2,          1,           4,           -1
+    };
+    char test3w1[TEST3_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "mad",       "mad",          "scientist",       "have",    "hi"
+    };
+    char test3w2[TEST3_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "scientist", "scientist",    "mad",      "mad",          "bye"
+    };
+
+
+standardizeRules (parameters)
+
+(test1dist, test1w1, test1w2, TEST1_NCRITERIA) // regular
+(test2dist, test2w1, test2w2, TEST2_NCRITERIA) // not alpha + repeat + empty, distance = 0
+(test3dist, test3w1, test3w2, TEST3_NCRITERIA) // multiple repeats + same distance, distance = negative
+
+Check all standard, not all letters, multiple of same word, empty cstring, multiple repeats, same distance, distance = 0, distance = negative, nRules <= 0
+
+determineQuality (parameters)
+
+const int TEST0_NCRITERIA = 5;
+    int test0dist[TEST1_NCRITERIA] = {
+        2,           4,          1,           13 ,  3
+    };
+    char test0w1[TEST1_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "mad",       "deranged", "nefarious", "have", "deranged"
+    };
+    char test0w2[TEST1_NCRITERIA][MAX_WORD_LENGTH+1] = {
+        "scientist", "robot",    "plot",      "mad", "deranged"
+    };
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "The mad UCLA scientist unleashed a deranged evil giant robot.”)	// regular
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "The mad UCLA scientist unleashed    a deranged robot.") 		// extra spaces
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "**** 2014 ****")							// no words
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "deranged deranged robot deranged robot robot")			// repeat words
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "Two mad scientists suffer from deranged-robot fever.")		// punctuation
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "")									// empty
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "deranged deranged deranged deranged deranged")		// word1 = word2, repeat
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "The deranged robot.")						// regular, punctuation
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "that is a Very Nefarious:: plot!!”)				// capitals, punctuation
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "The mad UCLA       $scientist unle@asheD a deranged robot.")	// spaces, punctuation
+(test0dist, test0w1, test0w2, TEST0_NCRITERIA,
+ "  That plot: NEFARIOUS!")				// start with spaces, capitals
+
+USE SAME TEST CASES FROM standardizeRules (used above)
+
+(test2dist, test2w1, test2w2, TEST2_NCRITERIA,
+“CAT dog”)							// distance = 0
+(test3dist, test3w1, test3w2, TEST3_NCRITERIA,
+“hi bye hi bye”)						// distance = negative
+(test3dist, test3w1, test3w2, -6,
+“Computer Science”)						// negative nRules
+(test3dist, test3w1, test3w2, 0,
+“the fun scientist is mad)					// nRules = 0
+
+
+Check no matches, all matches, negative/0 nRules, 0 distance, multiple of same word in document, word1 == word2, document is empty, document doesn’t have letters, document contains characters inside of words, start and end with spaces, extra spaces
+
+

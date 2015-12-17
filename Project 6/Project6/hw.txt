@@ -1,0 +1,156 @@
+Connor Kenny
+CS 31 Project 6 Hw
+
+1. a) Bugs: *ptr + 1 is not assignable ==> *(ptr + 1), ptr[0] needs to be *ptr[2] or just *(ptr + 2) because we don’t want to move the pointer (that just makes it more difficult), it prints backwards ==> start at beginning until end (ptr is first element and arr + 2 is the third element)
+
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int arr[3] = { 5, 10, 15 };
+    int* ptr = arr;
+    
+    *ptr = 30;          // set arr[0] to 30
+    *(ptr + 1) = 20;      // set arr[1] to 20
+    *(ptr + 2) = 10;        // set arr[2] to 10
+    
+    while (ptr <= arr + 2)
+    {
+        cout << *ptr << endl;    // print values
+        ptr++;
+    }
+}
+b) It did not pass the pointer by reference so it remained unchanged. By changing int* pToMax to int*& pToMax it solves the problem.
+
+#include <iostream>
+using namespace std;
+
+void findMax(int arr[], int n, int*& pToMax)
+{
+    if (n <= 0)
+        return;      // no items, no maximum!
+    
+    pToMax = arr;
+    
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] > *pToMax)
+            pToMax = arr + i;
+    }
+}
+
+c) The pointer is not initialized so it doesn’t actually have a place to point to. I solved this by setting its address to a random dummy variable because we really don’t care about where it is in memory, just the value it points to.
+
+int main()
+{
+    int n = 5;
+    int* ptr = &n;
+    computeCube(n, ptr);
+    cout << "Five cubed is " << *ptr << endl;
+}
+
+d) In while loop it should be pointer to str1 and str2 to check if they equal the 0 byte. Then you need the same thing in the if statement to check equality of characters (we don’t care about the addresses). Finally, the return statement has the same issue. We want to compare the characters that remain.
+
+// return true if two C strings are equal
+bool strequal(const char str1[], const char str2[])
+{
+    while (*str1 != '\0'  &&  *str2 != '\0')
+    {
+        if (*str1 != *str2)  // compare corresponding characters
+            return false;
+        str1++;            // advance to the next character
+        str2++;
+    }
+    return *str1 == *str2;   // both ended at same time?
+
+}
+
+
+e) In the getPtrToArray function, you return anArray, but it doesn’t point where you think it does. Because it is a local variable the memory is freed and it points to random memory. That means that when you call it in the main routine, it acts differently based on the f function, instead of printing the correct numbers
+
+2.
+
+double* cat;
+double mouse[5];
+cat = mouse + 4;
+*cat = 42;
+*(mouse + 3) = 17;
+cat -= 3;
+cat[1] = 25;
+cat[0] = 54;
+bool b = *cat == *(cat + 1);
+bool d = cat == mouse;         
+
+
+3. a)
+double mean(const double* scores, int numScores)
+{
+    double tot = 0;
+    
+    for (int i = 0; i < numScores; i++)
+        tot += *(scores + i);
+    
+    return tot/numScores;
+}
+
+b)
+const char* findTheChar(const char* str, char chr)
+{
+    for (int k = 0; *(str + k) != 0; k++)
+        if (*(str + k) == chr)
+            return (str + k);
+    
+    return nullptr;
+}
+
+c)
+const char* findTheChar(const char* str, char chr)
+{
+    for (; *str != 0; str++)
+        if (*str == chr)
+            return str;
+    
+    return nullptr;
+}
+
+
+4.
+main routine:
+array holds { 5, 3, 4, 17, 22, 19 }
+ptr is set to hold array
+value that ptr points to (1st element) to -1
+increase ptr by 2 so that it points to 3rd element of array
+ptr[1] = 9 ==> 4th element is equal to 9 now
+*(array + 1) = 79 ==> 2nd element is equal to 79 now
+cout ==> &array[5] - ptr ==> 5 - 2 ==> prints 3
+switch the addresses of array[0] and array[1]… doesn’t change values
+swaps values of array and array[2], so 1st element is 4, 3rd is -1
+now print each value of array on its own line ==> 4 79 -1 9 22 19
+
+array now holds: { 4, 79, -1, 9, 22, 19}
+
+Output: 
+3
+4
+79
+-1
+9
+22
+19
+
+
+5.
+
+void removeS(char* chr)
+{
+    for(char* ptr = chr; *ptr != '\0'; ptr++)
+    {
+        while(*ptr == 's' || *ptr == 'S')
+            ptr++;
+        *chr = *ptr;
+        chr++;
+    }
+    *chr = '\0';
+}

@@ -1,0 +1,104 @@
+Connor Kenny
+Project 3
+Report
+
+Notable Obstacles:
+My biggest mistake that I made on this project was not developing incrementally. After I got the first function to work, I went in too fast into writing the translateTune function. I wrote the entire thing, but when I ran it, it did not work as I intended. Then I had to go back and find all the bugs, which took a lot longer than it would have if I developed piece by piece, but I thought that I knew exactly what I was doing. I had to input tunes and change my program according to the incorrect output. This was an extremely inefficient and annoying process that I will definitely not be doing again. Another obstacle I encountered was accidentally typing an extra ‘}’. This threw off all of my loops and conditionals, so I had to spend a quite a bit of time finding the problem. Throughout this project I made many little mistakes that ended up taking exponentially more time to fix.
+
+
+
+Description of program:
+*translateNote function was provided
+
+isTuneWellFormed - 
+	Empty string returns true
+	Go through string with for loop
+	Check if character is a letter
+		If yes - check accidental
+			if yes - check digit
+				if yes - check ‘/‘
+					if yes - increase i to next note + continue
+					if no - check letter
+						if yes - increase i to next note + continue
+						if no - return false
+				if no- check ‘/‘
+					if yes - increase i to next note + continue
+					if no - check letter
+						if yes - increase i to next note + continue
+						if no - return false
+			if no - check digit
+				if yes - check ‘/‘
+					if yes - increase i to next note + continue
+					if no - check letter
+						if yes - increase i to next note + continue
+						if no - return false
+				if no - check ‘/‘
+					if yes - continue
+					if no - check letter
+						if yes - continue
+						if no - return false
+		If no - check ‘/‘
+			if yes - continue
+			if no - return false
+	return true if go through entire loop and it works
+	
+
+isPlayable - 
+	check to see if tune is well formed
+	set beatCount to 1
+	for loop that goes through string
+		count total beats
+		check if note is Cb2 - set badBeat to beatCount, return false
+		check if note is Cb6 - continue
+		check if note is C6 - continue
+		check if note is B#1 - continue
+		check if note is out of range - set badBeat to beatCount, return false
+	return true if makes it through entire loop
+
+translateTune - 
+	if playable -
+		set base values
+		for loop through string
+			count number of notes in beat
+			if more than one start with ‘[‘and end with ‘]’
+			for loop for each note in the beat
+				assign values to letter, accidental and oct depending on that notes characteristics
+				append translateNote’s output to instructions
+				increase i
+			reset note values
+			reset noteCount
+			check for rests - if so, append space character to instructions
+		return 0
+	if well formed but not playable - set bad beat (done in isPlayable) return 2
+	if not well formed - return 1
+
+main - tests program
+
+
+
+List of Test Cases:
+1. (Empty string) - is playable, translates to empty string
+2. /////A/ — check that ‘/‘ leads to space
+3. A/ - single note
+4. AA/ - multiple note beat
+5. AB/ - different notes in one beat
+6. A/A/ - multiple beats
+7. A3/ - different octave
+8. A#/ - accidental
+9. Ab/ - accidental
+10. A#5/ - accidental and octave
+11. /A - not well formed
+12. A9/ - well formed, but not playable (octave too high)
+13. ABC/D/CCC/ - multiple note beats with single note beat
+14. aa/ - lower case shouldn’t work
+15. A3#/ - not well formed, but close so easy mistake
+16. ABC//////A//BB//ADDD/ - make sure spaces rests translate correctly
+17. D3/F#3/A3/D4//D3F#3A3D4/ - mixture to compare single note beats and multiple note beat
+18. Z/ - letter that is not a note
+19. A A A/ - spaces make it not well formed
+20. Cb2/ - check Cb2 (not playable)
+21. Cb6/ - check Cb6
+22. C6/ - check C6
+23. B#1/ - Check B#1
+24. G3B3DD5//G/A/A3B/C5/B3D5//G//G//CE5//C5/D5/E5/F#5/B3G5//G//G/ - combination of all
+25. AC/DC - because AC/DC is awesome

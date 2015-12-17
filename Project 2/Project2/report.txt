@@ -1,0 +1,37 @@
+Connor Kenny
+CS 31 Project 2
+Report
+
+Notable obstacles I overcame: My biggest obstacle I encountered while writing this program was how to calculate the 201st through 400th text messages at a different rate than those over 400. I solved this by calculating those over 400 first, and then subtracting those messages that were already paid for from the original number to reach 400. Then the messages from 201 to 400 could be calculated at the correct price depending on what month the bill was for. I could have also solved for the total price of the text messages for the over 400 case by including the messages between 201 and 400, but that would have required me to have duplicate code. I believe that my solution was more efficient. Everything else went relatively smoothly.
+
+List of test data:
+	Format - (Minutes used, Text messages, Customer name, Month number)
+
+1) Check base bill
+	(100, 100, Connor K, 12)
+2) Check minutes error
+	(-500, 100, Connor K, 12)
+3) Check text messages error
+	(100, -500, Connor K, 12)
+4) Check empty customer name
+	(100, 100, , 12)
+5) Check month range - negative
+	(100, 100, Connor K, -3)
+6) Check month range - greater than 12
+	(100, 100, Connor K, 15)
+7) Check minutes greater than 500
+	(650, 100, Connor K, 12)
+8) Check messages between 201 and 400, regular
+	(100, 250, Connor K, 12)
+9) Check messages over 400
+	(100, 650, Connor K, 12)
+10) Check Summer Sale 
+	(100, 300, Connor K, 7)
+11) Combination - minutes over 500, texts between 201 and 400, summer sale
+	(650, 250, Connor K, 7)
+12) Combination - minutes over 500, texts over 400, summer sale
+	(650, 650, Connor K, 7)
+13)Combination - minutes over 500, texts between 201 and 400, regular
+	(650, 250, Connor K, 12)
+14)Combination - minutes over 500, texts over 400, regular
+	(650, 650, Connor K, 12)

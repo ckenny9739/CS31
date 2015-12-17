@@ -1,0 +1,99 @@
+Connor Kenny
+CS 31 HW 2
+
+1. output:
+endlendl
+grendel
+
+2. It prints an isosceles right triangle made up of number signs (#) with 2 sides of length “side” and a hypotenuse that slopes upward to the right.
+
+3.
+USE WHILE LOOPS
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int side;
+    
+    cout << "Enter a number: ";
+    cin >> side;
+    
+    for (int i = side; i > 0; i--)
+    {
+        int j = 0;
+        while(j < i-1)
+        {
+            cout << " ";
+            j++;
+        }
+        while(j < side)
+        {
+            cout << "#";
+            j++;
+        }
+        cout << endl;
+    }
+}
+
+4.
+USE A DO WHILE
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int side;
+    
+    cout << "Enter a number: ";
+    cin >> side;
+    
+    if ( side < 0)
+        ;
+    else
+    {
+        int i = side;
+        
+        do
+        {
+            int j = 0;
+            while(j < i-1)
+            {
+                cout << " ";
+                j++;
+            }
+            while(j < side)
+            {
+                cout << "#";
+                j++;
+            }
+            if(j!=0)
+                cout << endl;
+            i--;
+        }
+        
+        while (i > 0);
+    }
+}
+
+5. 
+USE A SWITCH STATEMENT
+	
+
+	switch (week)
+	{
+		case 0:
+			cout << "first lecture";
+			break;
+		case 4:
+		case 8:
+			cout << “midterm”;
+			break;
+		case 10:
+			cout << “final”;
+			break;
+		default:
+			cout << “nothing”;
+	}
